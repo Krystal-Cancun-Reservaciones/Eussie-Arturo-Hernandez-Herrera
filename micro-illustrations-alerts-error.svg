@@ -1,0 +1,15 @@
+<svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient x1="6.336%" y1="12.163%" x2="47.615%" y2="81.008%" id="jvikg7p5ta">
+            <stop stop-color="#1A2542" stop-opacity=".5" offset="0%"/>
+            <stop stop-color="#1A2542" stop-opacity="0" offset="100%"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path d="M0 0h56v56H0z"/>
+        <path d="M19.32 49.137h34.758a1.913 1.913 0 0 0 1.661-2.86L38.362 15.86a1.913 1.913 0 0 0-3.322 0L17.66 46.278a1.91 1.91 0 0 0 1.66 2.859z" fill="url(#jvikg7p5ta)" fill-rule="nonzero"/>
+        <path d="M10.652 42.086h34.757a1.913 1.913 0 0 0 1.662-2.86L29.693 8.804a1.913 1.913 0 0 0-3.323 0L8.993 39.226a1.91 1.91 0 0 0 1.659 2.86z" fill="#DA3951" fill-rule="nonzero"/>
+        <path d="M28.03 32.304a1.508 1.508 0 0 1-1.508-1.507V18.194a1.508 1.508 0 0 1 2.23-1.366 1.508 1.508 0 0 1 .787 1.366v12.602c0 .833-.675 1.508-1.509 1.508z" fill="#FFF" fill-rule="nonzero"/>
+        <ellipse fill="#FFF" fill-rule="nonzero" cx="28.03" cy="36.411" rx="1.76" ry="1.759"/>
+    </g>
+</svg>

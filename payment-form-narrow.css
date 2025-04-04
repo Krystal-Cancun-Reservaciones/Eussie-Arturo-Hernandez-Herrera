@@ -1,0 +1,324 @@
+.merchant-logo {
+	height: 120px;
+	text-align:center;
+	position: relative;
+}
+
+.merchant-logo h3 {
+	text-align: center;
+	position: absolute;
+	width:100%;
+	margin-left: -15px;
+	margin-right:-15px;
+	bottom: 20px;
+}
+
+.amount {
+	font-size: 30px;
+	font-weight: 500;
+	line-height: 1em;
+	margin-bottom:20px;
+}
+
+.amount small {
+	font-size: 50%;
+}
+
+.header {
+	position: relative;
+	padding-bottom: 0px;
+}
+
+.merchant-address {
+	height: 120px;
+	position: relative;
+}
+
+.merchant-address span {
+	position: absolute;
+	bottom:20px;
+}
+
+/* Custom order info */
+.order-info {
+    background-color: #eee;
+    border: 1px solid #e5e5e5;
+    padding-left:14px;
+    padding-right:10px;
+}
+
+/* Custom vertical content center */
+  .vertical-center{
+    width : 100%;
+    height : 100px;
+    display : table-cell;
+    vertical-align : middle;
+    float:none;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.footer-pos {
+  margin-bottom: -13%;
+  margin-top: 13%;
+}
+
+/* Custom page header */
+.form-section,
+.order-info,
+.alert-section{
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+/* Custom card payment */
+.card-payment {
+    border: 1px solid #e5e5e5;
+    padding-left: 0px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+}
+
+.footer small {
+	font-size:60%;
+}
+
+.footer img {
+	width: 77px;
+}
+
+.logo-openpay {
+  border-left: 1px solid #e5e5e5;
+}
+/* to print image in grayscale */
+.desaturate { -webkit-filter: grayscale(100%); filter: grayscale(100%); }
+
+/* Custom aling image with text */
+.aling-with-text {
+  float:left;
+  margin-right:10px;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .card-payment,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 5px;
+  }
+
+  /*
+   * Row with equal height columns
+   * --------------------------------------------------
+   */
+  .row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+  }
+}
+
+dd{
+    padding-bottom: 10px;
+}
+
+dl{
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Bitcoin */
+
+dl.padding-bottom-10 {
+	padding-bottom: 10px;	
+}
+
+.expiredPayment {
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.chargeExpired, .chargeCompleted, .chargeInProgress {
+	margin-top: 15px;
+}
+
+.progress-micro{
+	height: 3px!important;
+  	line-height: 3px!important;
+}
+
+.img-for-centered{
+	margin: 0 auto;
+}
+
+.btn-right {
+    margin-right: 15px;
+    float: right;
+}
+.openpay-letraColor
+{
+    color: #3c763d;
+}
+
+
+.messaguePayCard{
+    color :#3C9900;
+}
+.image-secutity-pay{
+    background: url(../img/icons/pagoSeguro.svg) no-repeat scroll 7px;
+    padding-left: 25px;
+    height: 25px;
+    background-size: 25px;
+}
+
+
+
+.image-logo{
+    background: url(../img/icons/logoOpenpayOrange.svg) no-repeat scroll 1px;
+    padding-left: 15px;
+    height: 35px;
+    background-size: 95px;
+}
+
+.openpay-title-letraColor{
+    color: #004481 !important;
+}
+
+.openpay-label-form{
+	font-size: 16px;
+}
+
+.openpay-data-trx{
+	color: rgb(0, 0, 0) !important;;
+}
+
+.btn-payment{
+    background-color: rgb(0, 68, 129);
+    color: #fff
+}
+
+.image-secutity-pay-3ds2{
+    background: url(https://s3.amazonaws.com/images.openpay/card_payment_img/pagoSeguro.svg) no-repeat scroll 7px;
+    padding-left: 25px;
+    height: 25px;
+}
+
+.image-lockpay-3ds2{
+    background: url(https://s3.amazonaws.com/images.openpay/card_payment_img/lock.svg) no-repeat scroll 1px;
+    padding-left: 25px;
+    height: 25px;
+}
+
+.amount3ds2-letraColor{
+	color: #004481;
+}
+
+@media print {
+    #confirmButton {
+        display: none;
+    }
+
+    #downloadReceipt {
+         display: none;
+    }
+
+    dl {
+        border-top: none !important;
+        border-bottom: none !important;
+    }
+
+    .dl-horizontal dd {
+        margin-left: 180px;
+    }
+
+    .dl-horizontal dt {
+        float: left;
+    }
+
+    .TextTitlePaymentSuccess {
+        font-size: 20px !important;
+        font-weight: 500 !important;
+    }
+
+    .TextDataDetailPaymentSuccess {
+        font-size: 15px !important;
+        text-align: right !important;
+    }
+
+    .TextDataPaymentSuccess {
+        font-size: 15px;
+        font-weight: normal;
+    }
+
+    .RectanglePaymentSuccess {
+        -webkit-print-color-adjust: exact;
+        background-color: #eaf9fa !important;
+        height: auto !important;
+        padding-bottom: 24px;
+    }
+
+    .TextSubtitlePaymentSuccess {
+	    font-size: 15px !important;
+		font-weight: normal !important;
+	}
+
+    .TextSubtitlePaymentSuccessBold {
+        font-size: 15px !important;
+        font-weight: bold !important;
+    }
+
+	.TextPaymentSuccess {
+    	font-weight: 500;
+    }
+
+    .Triangle {
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid #eaf9fa;
+        margin-left: 48%;
+    }
+
+    .RectangleHeader {
+	    height: 67px;
+	    margin: 0 0 40px;
+	    padding-top: 16px;
+	    padding-bottom: 16px;
+	    padding-left: 32px;
+	    border-radius: 12px 12px 0px 0px;
+	    box-shadow: 0 2px 10px 0 rgba(18, 18, 18, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+	    background-color: #fff;
+	}
+}

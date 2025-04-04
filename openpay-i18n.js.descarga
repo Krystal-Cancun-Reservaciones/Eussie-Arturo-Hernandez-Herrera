@@ -1,0 +1,43 @@
+;
+var OpenpayModule = OpenpayModule || {};
+
+OpenpayModule.i18n = (function() {
+
+	var initialized = false;
+
+	var init = function(locale) {
+		/* Validamos la libreria para poder no incluirla en la página,
+		 * ya que Radixx Enterprise podría fallar, necesitariamos ayuda
+		 * de Radixx para probar con la librería.
+		 */
+		if ($ && $.i18n && $.i18n.properties) {
+			$.i18n.properties({
+				name : "messages",
+				path : CONTEXT_PATH + "js/i18n/",
+				mode : 'map',
+				language : locale,
+				checkAvailableLanguages : true,
+				async : true,
+				callback : function() {
+					initialized = true;
+				}
+			});
+		}
+	}
+
+	var prop = function(defaultMessage, key, vars) {
+		if (!initialized) {
+			return defaultMessage;
+		}
+		var message = $.i18n.prop(key, vars);
+		if (message && message.indexOf(key) == 1) {
+			return defaultMessage;
+		}
+		return message;
+	};
+
+	return {
+		init : init,
+		prop : prop
+	};
+})();

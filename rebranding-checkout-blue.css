@@ -1,0 +1,193 @@
+.btn-primaryCheck{
+    background-color: #004481;
+    color: #fff
+}
+
+.image-logoCheck{
+    background: url(../img/icons/logoOpenpayBlue.svg) no-repeat scroll 1px;
+    padding-left: 15px;
+    height: 25px;
+    background-size: 90px;
+}
+
+.openpay-letraColorCheck{
+    color: #004481 !important;;
+}
+
+.image-logoCheckBig{
+    background: url(../img/icons/logoOpenpayBlue.svg) no-repeat scroll 1px;
+    padding-left: 15px;
+    height: 60px;
+    background-size: 175px;
+}
+
+
+
+
+.img-img-cardCheck {
+    top: 22%;
+    left: 32%;
+    width: 38%;
+    height: 50%;
+    opacity: 1;
+    position: absolute;
+    background: url("../img/icons/pagoTarjetaBlue.svg");
+    background-repeat: no-repeat;
+}
+
+.button-colorCheck{
+    background-color: #004481;
+    color: #fff
+}
+
+.img-img-cashCheck {
+    top: 22%;
+    left: 32%;
+    width: 38%;
+    height: 50%;
+    opacity: 1;
+    position: absolute;
+    background: url("../img/icons/pagoTiendaBlue.svg");
+    background-repeat: no-repeat;
+}
+/*imagen para pago en efectivo Peru */
+.img-img-cashCheckPer {
+    top: 21%;
+    left: 13%;
+    width: 79%;
+    height: 62%;
+    opacity: 1;
+    position: absolute;
+    background: url("../img/icons/pagoTiendaPeru.svg");
+    background-repeat: repeat;
+    background-repeat: no-repeat;
+}
+
+.input-image-nameCheck {
+    background: url(../img/icons/User-blue.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+}
+
+
+
+.input-image-emailCheck {
+    background: url(../img/icons/email-Blue.svg) no-repeat scroll 2px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 20px;
+
+}
+.img-img-spei {
+    top: 26%;
+    left: 24%;
+    width: 51%;
+    height: 49%;
+    opacity: 1;
+    position: absolute;
+    background: url("../img/icons/spei-blue.svg"); /* cambiar por icono correcto */
+    background-repeat: no-repeat;
+}
+
+.img-img-pseCheck {
+    top: 28%;
+    left: 24%;
+    width: 58%;
+    height: 43%;
+    opacity: 1;
+    position: absolute;
+    background: url("../img/icons/psePago.svg");
+    background-repeat: no-repeat;
+}
+
+.input-image-cardCheck {
+    background: url(../img/icons/Tarjeta.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+    background-color: #FFFFFF;
+}
+
+.select-expire-monthCheck {
+    background: url(../img/icons/Fecha.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+    background-color: #FFFFFF;
+}
+
+.input-image-cvvCheck {
+    background: url(../img/icons/CVV.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+    background-color: #FFFFFF;
+}
+
+.btn-openpay-blueCheck {
+    background-color: #004481;
+    border-color: #004481;
+    color: white;
+}
+
+.btn-openpay-blueCheck:hover {
+    background-color: #003768;
+    border-color: #003768;
+    color: white;
+}
+
+/*estilos para Pantalla PSE*/
+.input-image-bankCheck {
+    background: url(../img/icons/Bank-Blue.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+}
+
+
+.input-image-documentCheck {
+    background: url(../img/icons/numero_ID.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+}
+
+.input-image-identificationCheck {
+    background: url(../img/icons/ID-Blue.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+}
+
+
+.input-image-phoneCheck {
+    background: url(../img/icons/Mobile-blue.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+}
+
+
+
+.input-image-descriptionCheck {
+    background: url(../img/icons/Descripcion.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+}
+
+.input-image-amountCheck {
+    background: url(../img/icons/Valor-Blue.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+}
+
+
+.input-image-currencyCheck {
+    background: url(../img/icons/Moneda-Blue.svg) no-repeat scroll 7px;
+    padding-left: 30px;
+    height: 30px;
+    background-size: 15px;
+}

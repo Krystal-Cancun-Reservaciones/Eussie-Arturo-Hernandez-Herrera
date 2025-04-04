@@ -1,0 +1,1695 @@
+@font-face {
+    font-family: "BentonSansBBVA-Medium";
+    src: url("../fonts/BentonSansBBVA-Medium.otf");
+}
+
+@font-face {
+    font-family: "BentonSansBBVA-Book";
+    src: url("../fonts/BentonSansBBVA-Book.otf");
+}
+
+@font-face {
+    font-family: "BentonSansBBVA-Bold";
+    src: url("../fonts/BentonSansBBVA-Bold.otf");
+}
+
+@font-face {
+    font-family: "BentonSansBBVA-Light";
+    src: url("../fonts/BentonSansBBVA-Light.otf");
+}
+
+body {
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #f4f4f4 !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.safari-select {
+    font-size: 15px;
+    font-family: BentonSansBBVA-Book;
+    -webkit-border-radius: 1px !important;
+    height: calc(2.3rem + 2px) !important;
+    line-height: 1 !important;
+    padding-top: 16px !important;
+    padding: 0rem 0.75rem !important;
+    border: none !important;
+    border-block-end: revert !important;
+    background-image: url("../img/icons/icons-security-and-navigation-unfold.svg");
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-color: #e9e9e9 !important;
+}
+
+.body-background {
+     background-image: none !important;
+     background-color: #f4f4f4 !important;
+}
+
+.container-checkout{
+    margin: 0 auto;
+    width: 816px !important;
+}
+
+.RectangleMain {
+  width: 816px !important;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  margin-top:56px;
+  padding-bottom: 40px !important;
+}
+
+.RectangleHeader {
+  height: 67px;
+  margin: 0 0 40px;
+  padding-top:16px;
+  padding-bottom:16px;
+  padding-left:32px;
+  padding-right: 20px;
+  border-radius: 12px 12px 0px 0px;
+  box-shadow: 0 2px 10px 0 rgba(18, 18, 18, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+  background-color: #fff;
+}
+
+.card-6col {
+  margin-left: 3% !important;
+  height: 495px;
+  margin: 0 0px 0 0;
+  padding: 24px 0.8px 0.7px 0.7px;
+  border-radius: 12px;
+  box-shadow: 0 0 5px 0 rgba(18, 18, 18, 0.04), 0 1px 3px 1px rgba(18, 18, 18, 0.04);
+  border: solid 1px #e9e9e9;
+  background-color: #fff;
+}
+
+.checkout-left {
+	width: 360px;
+    margin-left: 32px;
+}
+
+.card-checkout-left {
+    border-radius: 12px;
+    box-shadow: 0 0 5px 0 rgba(18, 18, 18, 0.04), 0 1px 3px 1px rgba(18, 18, 18, 0.04);
+    border: solid 1px #e9e9e9;
+    background-color: #fff;
+}
+
+.logoCommerce {
+    display: flex;
+    height: 100px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px;
+}
+
+.display {
+    display: flex !important;
+}
+
+.RectangleDetail {
+    height: 394px;
+    margin: 0;
+    padding: 24px 66px 134px 23px;
+    border-radius: 0 0 12px 12px !important;
+    background-image: linear-gradient(to bottom, #fafafa, #f4f4f4);
+}
+
+.Text {
+  width: 153px;
+  height: 24px;
+  font-family: BentonSansBBVA-Medium;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  color: #121212;
+  display: -webkit-inline-box;
+}
+
+.TextSubtitle {
+  width: 98px;
+  height: 24px;
+  font-family: BentonSansBBVA-Medium;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #121212;
+}
+
+.SeparatorLine {
+  width: 24px;
+  height: 2px;
+  margin: 16px 245px 16px 0;
+  background-color: #14c8be;
+}
+
+.Badge-Amount {
+  width: 13px;
+  height: 24px;
+  margin: 0 2px 8px 0;
+  transform: rotate(-360deg);
+  font-family: BentonSansBBVA;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  color: #121212;
+}
+
+.Amount {
+  width: 163px;
+  height: 32px;
+  margin: 0 0 0 2px;
+  transform: rotate(-360deg);
+  font-family: BentonSansBBVA-Medium;
+  font-size: 32px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #121212;
+}
+
+.TextConcept {
+  width: 269px;
+  height: 48px;
+  margin: 8px 0 0;
+  font-family: BentonSansBBVA-Book;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #666;
+}
+
+.CardPaymentsType {
+  width: 360px;
+  height: 290px;
+  margin: 24px 32px 40px;
+  padding: 16px 0 11px;
+  border-radius: 12px;
+  box-shadow: 0 0 5px 0 rgba(18, 18, 18, 0.2);
+  background-color: #fff;
+}
+
+img.IconsFinancial-Operations-and-ProductsCard {
+  width: 24px;
+  height: 24px;
+  margin: 0 0px 0 0;
+  object-fit: contain;
+}
+
+.-Title-Editable {
+  width: 302px;
+  height: 24px;
+  font-family: BentonSansBBVA-Medium;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #004481;
+  display: -webkit-inline-box;
+}
+
+.SeparatorLine2 {
+  width: 100%;
+  height: 1px;
+  margin: 16px 0 16px;
+  background-color: #d3d3d3;
+}
+
+img.IconsFinancial-Operations-and-ProductsSend-Money-Dollar {
+  width: 24px;
+  height: 24px;
+  margin: 0 0px 0 0;
+  object-fit: contain;
+}
+
+.OvalRadio {
+  width: 32px;
+  height: 32px;
+  border: solid 1px #666;
+  background-color: #f4f4f4;
+}
+
+.TextDueDate {
+    font-family: BentonSansBBVA-Book;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: #000;
+}
+
+.TextStores {
+  font-family: BentonSansBBVA-Book;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #666;
+}
+
+.text-style-1 {
+  font-size: 13px;
+  font-weight: 500;
+  color: #004481;
+  font-family: 'BentonSansBBVA-Medium';
+  cursor:pointer;
+}
+
+.text-style-1:hover {
+    color: #043263;
+}
+
+img.IconsFinancial-Operations-and-ProductsSend-Money-Dollar {
+  width: 24px;
+  height: 24px;
+  margin: 0 0px 0 0;
+  object-fit: contain;
+}
+
+input[type=radio] {
+	appearance: none;
+	padding: 10px;
+	background-color: #f4f4f4;
+	border-radius: 50%;
+	margin: 2px 0 0 !important;
+}
+
+input[type=radio]:checked {
+	appearance: auto;
+	accent-color: #004481;
+}
+
+.back {
+  width: 68px;
+  height: 23px;
+  cursor: pointer;
+  font-family: BentonSansBBVA-Medium;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #004481;
+}
+
+.back:hover {
+	color: #043263 !important;
+}
+
+.continueDisabled {
+	width: 140px;
+    height: 40px;
+    border-radius: 12px !important;
+	border-color: #e9e9e9 !important;
+    color: #bdbdbd !important;
+    background-color: #e9e9e9 !important;
+}
+
+img.Micro-IllustrationsLocation-BuildingsCommerce {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.Box-button {
+	width: 140px;
+	height: 40px;
+	padding: 0 0px 0 0 !important;
+	border-radius: 12px !important;
+	background-color: #004481 !important;
+	color: #fff !important;
+	font-family: 'BentonSansBBVA-Medium';
+	font-size: 16px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1;
+	letter-spacing: normal;
+	text-align: center;
+}
+
+img.IconsActivitiesBullet {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.Bullet-List-Text {
+  width: 230px;
+  height: 24px;
+  font-family: BentonSansBBVA-Book;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #121212;
+}
+
+.Info-Notification-Label {
+  font-family: BentonSansBBVA-Book;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #121212;
+}
+
+img.IconsCommunication-and-MultimediaInfo {
+  width: 16px;
+  height: 16px;
+  margin-right: 2%;
+  margin-top: 1%;
+  object-fit: contain;
+}
+
+.inputCard {
+	border: none !important;
+	border-block-end: revert !important;
+	background-color: #f4f4f4 !important;
+	border-radius: 0px !important;
+}
+
+.buttonPay {
+  width: 140px;
+  height: 40px;
+  border-radius: 12px !important;
+  background-color: #004481 !important;
+}
+
+.form-floating>.form-control,
+.form-floating>.form-control-plaintext {
+  padding: 0rem 0.75rem !important;
+}
+
+.form-floating>.form-control,
+.form-floating>.form-control-plaintext,
+.form-floating>.form-select {
+  height: calc(2.3rem + 2px) !important;
+  line-height: 1 !important;
+  padding-top: 16px !important;
+}
+
+.form-floating>label {
+    padding: 0.5rem 0.75rem !important;
+}
+
+.form-floating>.form-control:focus~label, .form-floating>.form-control:not(:placeholder-shown)~label, .form-floating>.form-select~label {
+    font-size: 13px !important;
+    transform: scale(.85) translateY(-0.4rem) translateX(0.15rem) !important;
+}
+
+img.IconsSecurity-and-NavigationLock {
+  width: 23px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.TextPayment {
+  width: 336px;
+  height: 24px;
+  margin-left: 3px;
+  font-family: BentonSansBBVA-Bold;
+  font-size: 15px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #388d4f;
+}
+
+.securePayment {
+    padding-top:27px;
+}
+
+.cardData {
+    margin-left: 32px;
+    height: auto;
+    margin-right: 32px;
+    padding-top: 24px;
+}
+
+.iconStyle {
+    display:inline-block;
+    padding-left: 16px;
+}
+
+.form-control:valid {
+  background-color:  #f4f4f4 !important;
+}
+
+.help-block{
+	margin-top: 3px !important;
+	color: #121212 !important;
+	padding-left: calc(1.5em + 0.75rem);
+    background-repeat: no-repeat;
+    background-position: left calc(0.375em + 0.1875rem) center;
+    background-image: url(../img/icons/icons-communication-and-multimedia-warning.svg);
+    padding-top: 2px;
+    margin-left: 10px;
+    position: relative !important;
+}
+/*clase especifica para validaciones de fecha en pago con tarjeta*/
+.help-block-date{
+	margin-top: 3px !important;
+	color: #121212 !important;
+	padding-left: calc(1.5em + 0.75rem);
+    background-repeat: no-repeat;
+    background-position: left calc(0.375em + 0.1875rem) center;
+    background-image: url(../img/icons/icons-communication-and-multimedia-warning.svg);
+    padding-top: 2px;
+    margin-left: 10px;
+    position: relative !important;
+}
+
+.modal-content {
+    border-radius: 12px !important;
+    width: inherit;
+    max-width: inherit;
+    height: inherit;
+    margin: 0 auto;
+    pointer-events: all;
+}
+
+.closeM {
+	float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    color: #004481 !important;
+    opacity: 1;
+    position: relative;
+    z-index: 99;
+    cursor: pointer !important;
+}
+
+button.closeM {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+}
+
+.closeM:hover {
+    color: #004481 !important;
+    opacity: 1;
+}
+
+.closeM>span {
+    font-size: 35px !important;
+    color: #004481 !important;
+    font-family: 'BentonSansBBVA-Book';
+}
+
+.modal-header .closeM {
+    margin-top: 16px !important;
+    margin-right: 16px !important;
+}
+
+.modal-header {
+    min-height: 0px;
+    margin-top: 0px;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 0px !important;
+}
+
+.modal-body {
+    position: relative !important;
+    padding: 15px !important;
+    padding-top: 24px !important;
+}
+
+.closeCard {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+	color: #004481;
+	opacity: 1;
+	border: 0;
+	margin: -0.5rem -0.5rem -0.5rem auto;
+	border-radius: 0.25rem;
+	background-color: white;
+	margin-left: 29rem !important;
+    margin-top: 2rem;
+    position: absolute;
+}
+
+.closeCard:hover {
+    color: #004481;
+    opacity: 1;
+}
+
+.closeCard>span {
+    font-size: 24px !important;
+     color: #004481 !important;
+     font-family: 'BentonSansBBVA-Book';
+}
+
+button.closeCard {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+}
+
+.modal-header .closeCard {
+    margin-top: 16px !important;
+    margin-right: 16px !important;
+}
+
+.Box-button:hover {
+    color: #fff !important;
+    background-color: #043263 !important;
+}
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+.vertical-align-center {
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+
+.Info-Label {
+  font-family: BentonSansBBVA-Book;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #666;
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+}
+
+.has-error-op .form-control {
+    background-color: #fcdfdf !important;
+    color: #b92a45;
+    border-color: #d44b50 !important;
+}
+
+.has-error .form-control {
+    background-color: #fcdfdf !important;
+    color: #b92a45;
+    border-color: #d44b50 !important;
+    margin-bottom: 8px !important;
+}
+
+.has-error-op .help-block, .help-block-date, .has-error-op .control-label {
+   color: #b92a45;
+}
+
+
+element.style {
+    border-radius: 12px;
+    width: 140px;
+    height: 40px;
+}
+.btn.focus, .btn:focus, .btn:hover {
+    color: white;
+    outline: none;
+    outline-offset: 0;
+}
+
+.loadingoverlay {
+	justify-content: center !important;
+}
+
+.loadingoverlay_element.loadingoverlay_text {
+	font-family: BentonSansBBVA-Book !important;
+	font-size: 15px !important;
+	font-weight: normal !important;
+	font-stretch: normal !important;
+	font-style: normal !important;
+	line-height: 1.6 !important;
+	letter-spacing: normal !important;
+	color: #121212 !important;
+	padding-top: 15px !important;
+	margin-top: 20px !important;
+}
+
+.modal-backdrop {
+    opacity:0.7 !important;
+    background-color: #121212
+}
+
+.labelCheckBox {
+  font-family: 'BentonSansBBVA-Light' !important;
+  font-size: 15px !important;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #121212 !important;
+  margin-left: 8px !important;
+}
+
+.RectanglePaymentSuccess {
+  height: 248px;
+  background-color: #eaf9fa;
+}
+
+.TextTitlePaymentSuccess {
+  font-family: BentonSansBBVA-Medium;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: center;
+  color: #121212;
+}
+
+.TextPaymentSuccess {
+  font-family: BentonSansBBVA-Medium;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: center;
+  color: #121212;
+}
+
+.TextSubtitlePaymentSuccess {
+  font-family: BentonSansBBVA-Light;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-align: center;
+  color: #121212;
+}
+
+.Triangle {
+	width: 0;
+	height: 0;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 20px solid #eaf9fa;
+	margin-left: 48%;
+}
+
+dl {
+    border-top: none !important;
+    border-bottom: none !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.TextDataPaymentSuccess {
+  font-family: BentonSansBBVA-Book;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #121212;
+  text-align: left !important;
+  width: max-content !important;
+}
+
+.TextDataDetailPaymentSuccess {
+  font-family: BentonSansBBVA-Book;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-align: right !important;
+  color: #121212;
+}
+
+a:focus, a:hover {
+    color: #043263;
+    text-decoration: none;
+}
+
+.buttonContinue{
+	font-family: 'BentonSansBBVA-Medium' !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    font-stretch: normal !important;
+    font-style: normal !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    text-align: center !important;
+}
+
+input[type=checkbox]:checked{
+	outline: solid 1px #666 !important;
+	accent-color: #f4f4f4 !important;
+	background-color: #f4f4f4 !important;
+}
+
+input[type=checkbox]:checked:after {
+	content: '\2713';
+	color: #004481;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+input[type=checkbox]{
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  width: 25px !important;
+  height: 25px !important;
+  appearance:none;
+  border-radius:10%;
+  border: solid 1px #666 !important;
+  box-shadow: none;
+  font-size: 1em;
+  background-color: white !important;
+}
+
+#listDesktop {
+	display: block !important;
+}
+
+#listMobil {
+	display: none !important;
+}
+
+#listTablet {
+	display: none !important;
+}
+
+#bankListDesktop {
+	display: block !important;
+}
+
+#bankListMobil {
+	display: none !important;
+}
+
+#bankListTablet {
+		display: none !important;
+}
+
+.privacyNotice {
+    margin-bottom: 2%;
+    padding-left: 32px;
+    display: flex;
+    margin-right: 32px;
+}
+
+.paymentSuccess {
+    height: auto !important;
+    margin-top:56px;
+    padding-bottom: 40px;
+}
+
+.textCardError {
+    font-family: BentonSansBBVA-Medium;
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #121212;
+}
+
+.textCardErrorMsg {
+    text-align: center;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+#icons-mid {
+    display: none;
+}
+
+#buttonContainerId {
+    width: 100% !important;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 32px;
+}
+
+.footer {
+    padding-bottom: 9% !important;
+}
+
+.img-ecommerce {
+    height: 52px !important;
+}
+
+.input-msi{
+    background-image: url("../img/icons/icons-security-and-navigation-unfold.svg");
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+    font-size: 15px;
+    font-family: BentonSansBBVA-Book;
+    border-radius: 1px !important;
+    border: none !important;
+    border-block-end: revert !important;
+    background-color: #f4f4f4 !important;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.merchant-name{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    height: auto !important;
+}
+
+@media (min-width: 768px) and (max-width: 834px) {
+    .modal-content {
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+}
+
+.select-box__current:focus .select-box__icon {
+    -webkit-transform: translateY(-50%) rotate(180deg);
+    transform: translateY(-50%) rotate(180deg);
+}
+.select-box__icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    transition: 0.2s ease;
+}
+
+datalist {
+    position: absolute;
+    border-top: none;
+    font-family: sans-serif;
+    padding: 5px;
+    max-height: 10rem;
+    overflow-y: auto;
+    width: 100%;
+    box-shadow: 0 1px 3px 0 rgba(18, 18, 18, 0.2);
+    background-color: #fff;
+}
+option {
+    background-color: white;
+    padding: 8px;
+    margin-bottom: 1px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #004481;
+    font-family: 'BentonSansBBVA-Medium';
+}
+option:hover, .active {
+    background-color: #f4f4f4;
+}
+
+#chargeSubmitButton:disabled,
+fieldset:disabled {
+    opacity: initial !important;
+}
+
+input#useCardPoints.points-disabled {
+    border: solid 1px #c2c2c2 !important;
+    background-color: #fbfbfb !important;
+}
+span#pointsMessageNew.points-disabled {
+    color: #c6c6c6 !important;
+}
+
+@media (min-width: 430px) and (max-width: 833px) {
+    #downloadReceipt {
+        margin-bottom: 32px !important;
+    }
+
+    #icons-headr {
+        display: none;
+    }
+
+    #cardPaymentForm {
+        height: auto !important;
+        width: 424px !important;
+        padding-bottom: 38px;
+    }
+
+    #checkout-right {
+        padding-top: 24px !important;
+        padding-bottom: 24px !important;
+    }
+
+    #icons-mid {
+        display: flex !important;
+        padding-top: 91.6px !important;
+        padding-left: 259px !important;
+        padding-right: 32px;
+    }
+
+    #fomr-buttons {
+        padding-bottom: 8px !important;
+    }
+
+    .display {
+        display: block !important;
+    }
+
+    .container-border {
+        height: 1117px !important;
+        width: 424px !important;
+    }
+
+    .container-checkout{
+        margin: 0 auto;
+        width: 424px !important;
+        padding-bottom: 16px !important;
+    }
+
+    .RectangleMain {
+        display: block !important;
+        height: auto !important;
+        width: 424px !important;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        margin-top: 40px !important;
+    }
+
+    .RectangleHeader {
+        width: 424px !important;
+        margin: 0 0 40px;
+        height: 67px !important;
+        padding-top:16px;
+        padding-bottom:16px;
+        padding-left:32px;
+        border-radius: 12px 12px 0px 0px;
+        box-shadow: 0 2px 10px 0 rgba(18, 18, 18, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+        background-color: #fff;
+    }
+
+    .checkout-left {
+    	width: 360px;
+        height: 407px;
+        padding: 0 0.6px 0.7px 0.6px;
+        margin: 0 32px 0 32px !important;
+    }
+
+    .logoCommerce {
+        width: 199.7px !important;
+        height: 52px !important;
+        margin: 24px 63.7px 24px 23.4px !important;
+        padding: 0 !important;
+    }
+
+    .RectangleDetail {
+        width: 359px;
+        height: 306.4px;
+        padding: 47px 66.3px 23.4px 23.7px;
+        margin: 0;
+        border-radius: 0 0 12px 12px !important;
+        background-image: linear-gradient(to bottom, #fafafa, #f4f4f4);
+    }
+
+    .SeparatorLine {
+        width: 24px;
+        height: 2px;
+        background-color: #14c8be;
+        margin: 16px 216px 16px 0;
+    }
+
+    .TextConcept {
+      width: 240px;
+      height: 48px;
+      margin: 8px 0 0;
+      font-family: BentonSansBBVA-Light;
+      font-size: 15px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.6;
+      letter-spacing: normal;
+      color: #666;
+    }
+
+    .TextPayment {
+        width: 336px;
+        height: 24px;
+        font-size: 15px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.6;
+        letter-spacing: normal;
+        color: #388d4f;
+        margin-left: 3px;
+        font-family: BentonSansBBVA-Bold;
+    }
+
+    .securePayment {
+        padding-top: 27.6px !important;
+    }
+
+    .cardData {
+        margin-left: 32px;
+        height: auto;
+        margin-right: 32px;
+        padding-top: 24px;
+    }
+
+    .Info-Notification-Label {
+        width: 360px !important;
+        height: 48px !important;
+        font-size: 15px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.6;
+        letter-spacing: normal;
+        color: #121212;
+        font-family: BentonSansBBVA-Book;
+        margin-top: 8px !important;
+    }
+
+    .privacyNotice {
+        padding-left: 32px !important;
+    }
+
+    .iconStyle {
+        width: 30px !important;
+        height: 24px !important;
+        padding-left: 8px !important;
+    }
+
+    .paymentSuccess {
+        margin-top:96px !important;
+        margin-bottom: 133px !important;
+        height: auto !important;
+        padding-bottom: 40px !important;
+    }
+
+    .RectanglePaymentSuccess {
+        height: 248px !important;
+    }
+
+    .TextTitlePaymentSuccess {
+        width: 299px !important;
+        height: 24px !important;
+    }
+
+    .TextSubtitlePaymentSuccess {
+        width: max-content;
+        height: 24px;
+        font-family: BentonSansBBVA-Book !important;
+    }
+
+    .Triangle {
+    	margin-left: 195px !important;
+    }
+
+    .TextDataPaymentSuccess {
+      text-align: center !important;
+      width: max-content !important;
+    }
+
+    dl {
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+        padding-left: 32px !important;
+        padding-right: 32px !important;
+        width: 424px !important;
+    }
+
+    dd {
+        padding-bottom: 16px !important;
+    }
+
+    .modal-body {
+        padding: 0 16px !important;
+    }
+
+    .modal-content {
+        margin-right: 22px !important;
+        margin-left: 22px !important;
+    }
+
+    .error-modal{
+        width: auto !important;
+    }
+
+    .container {
+        padding-right: 58px !important;
+        padding-left: 58px !important;
+        display: flex;
+        justify-content: center;
+    }
+
+    .containerSuccess {
+        padding-left: 88px !important;
+    }
+
+    .dl-horizontal dt {
+        float: left !important;
+    }
+
+    .img-fluid {
+        height: 52px !important;
+    }
+}
+
+@media (min-width: 150px) and (max-width: 359px) {
+
+    #downloadReceipt {
+        margin-bottom: 32px !important;
+    }
+
+    #icons-headr {
+        display: none;
+    }
+
+    #cardPaymentForm {
+        height: auto !important;
+        width: 320px !important;
+        margin-bottom: 16px !important;
+    }
+
+    #checkout-right {
+        padding-top: 16px !important;
+        padding-bottom: 24px !important;
+    }
+
+    #icons-mid {
+        display: flex !important;
+        padding-top: 92.7px !important;
+        padding-left: 170px !important;
+        padding-right: 16px;
+    }
+
+    #fomr-buttons {
+        padding-bottom: 24px !important;
+    }
+
+    .display {
+        display: block !important;
+    }
+
+    .container-border {
+        height: auto !important;
+        width: 320px !important;
+    }
+
+    .container-checkout{
+        margin: 0 !important;
+        width: 320px !important;
+        padding-bottom: 16px !important;
+    }
+
+    .RectangleMain {
+        display: block !important;
+        height: auto !important;
+        width: 320px !important;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        margin-top: 24px !important;
+    }
+
+    .RectangleHeader {
+        width: 320px !important;
+        margin: 0 0 40px;
+        height: 67px !important;
+        padding-top:16px;
+        padding-bottom:16px;
+        padding-left:32px;
+        border-radius: 12px 12px 0px 0px;
+        box-shadow: 0 2px 10px 0 rgba(18, 18, 18, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+        background-color: #fff;
+    }
+
+    .checkout-left {
+    	width: 288px;
+        height: 389px;
+        padding: 0 0.6px 0.7px 0.6px;
+        margin: 0 16px 0 16px;
+    }
+
+    .logoCommerce {
+        width: 199.7px !important;
+        height: 52px !important;
+        margin: 24px 63.7px 24px 24px !important;
+        padding: 0 !important;
+    }
+
+    .RectangleDetail {
+        width: 286.9px;
+        height: 288.3px;
+        padding: 29px 23.4px 23.3px 23.4px;
+        margin: 0;
+        border-radius: 0 0 12px 12px !important;
+        background-image: linear-gradient(to bottom, #fafafa, #f4f4f4);
+    }
+
+    .SeparatorLine {
+        width: 24px;
+        height: 2px;
+        background-color: #14c8be;
+        margin: 16px 216px 16px 0;
+    }
+
+    .TextConcept {
+      width: 240px;
+      height: 48px;
+      margin: 8px 0 0;
+      font-family: BentonSansBBVA-Light;
+      font-size: 15px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.6;
+      letter-spacing: normal;
+      color: #666;
+    }
+
+    .TextPayment {
+        width: 262px;
+        height: 24px;
+        font-size: 11px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 2.18;
+        letter-spacing: normal;
+        color: #388d4f;
+        margin-left: 3px;
+        font-family: BentonSansBBVA-Bold;
+    }
+
+    .securePayment {
+        padding-top: 24.7px !important;
+    }
+
+    .cardData {
+        margin-left: 16px;
+        height: auto;
+        margin-right: 16px;
+        padding-top: 24px;
+    }
+
+    .Info-Notification-Label {
+        width: 288px !important;
+        height: 48px !important;
+        font-size: 15px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.6;
+        letter-spacing: normal;
+        color: #121212;
+        font-family: BentonSansBBVA-Book;
+    }
+
+    .privacyNotice {
+        padding-left: 16px !important;
+    }
+
+    .iconStyle {
+        width: 30px !important;
+        height: 24px !important;
+        padding-left: 8px !important;
+    }
+
+    .paymentSuccess {
+        height: auto !important;
+        margin-top:24px !important;
+        margin-bottom: 16px !important;
+        padding-bottom: 32px !important;
+    }
+
+    .RectanglePaymentSuccess {
+        height: 272px !important;
+    }
+
+    .TextTitlePaymentSuccess {
+        width: 288px !important;
+        height: 48px !important;
+    }
+
+    .TextSubtitlePaymentSuccess {
+        width: max-content;
+        height: 24px;
+        font-family: BentonSansBBVA-Book !important;
+    }
+
+    .Triangle {
+    	margin-left: 143px !important;
+    }
+
+    .TextDataPaymentSuccess {
+      text-align: center !important;
+      width: unset !important;
+    }
+
+    .TextDataDetailPaymentSuccess {
+      text-align: center !important;
+    }
+
+    dl {
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+    }
+
+    dd {
+        padding-bottom: 16px !important;
+    }
+
+    .modal-body {
+        padding: 0 16px !important;
+    }
+
+    .modal-content {
+        margin-right: 16px !important;
+        margin-left: 16px !important;
+    }
+
+    .error-modal{
+        width: auto !important;
+        height: 260px !important;
+    }
+
+    .footer {
+        padding-top: 0px !important;
+        padding-bottom: 0% !important;
+    }
+
+    .containerSuccess {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .TextSubtitleMobile {
+        margin-left: 16px !important;
+    }
+
+    .back {
+        margin-left: 16px !important;
+    }
+
+    .buttonContinue {
+        margin-right: 16px !important
+    }
+
+    .img-fluid {
+        height: 52px !important;
+    }
+
+}
+
+@media (min-width: 360px) and (max-width: 429px) {
+
+    #downloadReceipt {
+        margin-bottom: 32px !important;
+    }
+
+    #icons-headr {
+        display: none;
+    }
+
+    #cardPaymentForm {
+        height: auto !important;
+        width: 352px !important;
+        padding-bottom: 16px;
+    }
+
+    #checkout-right {
+        padding-top: 24px !important;
+        padding-bottom: 24px !important;
+    }
+
+    #icons-mid {
+        display: flex !important;
+        padding-top: 92.7px !important;
+        padding-left: 170px !important;
+        padding-right: 16px;
+    }
+
+    #fomr-buttons {
+        padding-bottom: 24px !important;
+    }
+
+    .display {
+        display: block !important;
+    }
+
+    .container-border {
+        height: 1103px !important;
+        width: 352px !important;
+    }
+
+    .container-checkout{
+        margin: 0 !important;
+        width: 352px !important;
+        padding-bottom: 16px !important;
+    }
+
+    .RectangleMain {
+        display: block !important;
+        height: auto !important;
+        width: 352px !important;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        margin-top: 24px !important;
+    }
+
+    .RectangleHeader {
+        width: 352px !important;
+        margin: 0 0 40px;
+        height: 67px !important;
+        padding-top:16px;
+        padding-bottom:16px;
+        padding-left:32px;
+        border-radius: 12px 12px 0px 0px;
+        box-shadow: 0 2px 10px 0 rgba(18, 18, 18, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+        background-color: #fff;
+    }
+
+    .checkout-left {
+    	width: 288px;
+        height: 389px;
+        padding: 0 0.6px 0.7px 0.6px;
+        margin: 0 32px 0 32px;
+    }
+
+    .logoCommerce {
+        width: 199.7px !important;
+        height: 52px !important;
+        margin: 24px 63.7px 24px 24px !important;
+        padding: 0 !important;
+    }
+
+    .RectangleDetail {
+        width: 286.9px;
+        height: 288.3px;
+        padding: 29px 23.4px 23.3px 23.4px;
+        margin: 0;
+        border-radius: 0 0 12px 12px !important;
+        background-image: linear-gradient(to bottom, #fafafa, #f4f4f4);
+    }
+
+    .SeparatorLine {
+        width: 24px;
+        height: 2px;
+        background-color: #14c8be;
+        margin: 16px 216px 16px 0;
+    }
+
+    .TextConcept {
+      width: 240px;
+      height: 48px;
+      margin: 8px 0 0;
+      font-family: BentonSansBBVA-Light;
+      font-size: 15px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.6;
+      letter-spacing: normal;
+      color: #666;
+    }
+
+    .TextPayment {
+        width: 262px;
+        height: 24px;
+        font-size: 11px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 2.18;
+        letter-spacing: normal;
+        color: #388d4f;
+        margin-left: 3px;
+        font-family: BentonSansBBVA-Bold;
+    }
+
+    .securePayment {
+        padding-top: 24.7px !important;
+    }
+
+    .cardData {
+        margin-left: 32px;
+        height: auto;
+        margin-right: 32px;
+        padding-top: 24px;
+    }
+
+    .Info-Notification-Label {
+        width: 288px !important;
+        height: 48px !important;
+        font-size: 15px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.6;
+        letter-spacing: normal;
+        color: #121212;
+        font-family: BentonSansBBVA-Book;
+    }
+
+    .privacyNotice {
+        padding-left: 32px !important;
+    }
+
+    .iconStyle {
+        width: 30px !important;
+        height: 24px !important;
+        padding-left: 8px !important;
+    }
+
+    .paymentSuccess {
+        height: auto !important;
+        margin-top: 24px !important;
+        margin-bottom: 16px !important;
+        padding-bottom: 32px !important;
+    }
+
+    .RectanglePaymentSuccess {
+        height: 272px !important;
+    }
+
+    .TextTitlePaymentSuccess {
+        width: 288px !important;
+        height: 48px !important;
+    }
+
+    .TextSubtitlePaymentSuccess {
+        width: max-content;
+        height: 24px;
+        font-family: BentonSansBBVA-Book !important;
+    }
+
+    .Triangle {
+    	margin-left: 160px !important;
+    }
+
+    .TextDataPaymentSuccess {
+      text-align: center !important;
+      width: unset !important;
+    }
+
+    .TextDataDetailPaymentSuccess {
+      text-align: center !important;
+    }
+
+    dl {
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+    }
+
+    dd {
+        padding-bottom: 16px !important;
+    }
+
+    .modal-body {
+        padding: 0 16px !important;
+    }
+
+    .modal-content {
+        margin-right: 16px !important;
+        margin-left: 16px !important;
+    }
+
+    .error-modal{
+        width: auto !important;
+    }
+
+    .containerSuccess {
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+    }
+
+    .img-fluid {
+        height: 52px !important;
+    }
+
+}
+
+@media (min-width: 602px) and (max-width: 833px){
+    .error-modal{
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}

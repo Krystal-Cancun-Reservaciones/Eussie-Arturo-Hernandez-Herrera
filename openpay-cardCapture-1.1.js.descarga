@@ -1,0 +1,1029 @@
+let validDateJs;
+let booleanDigital;
+let digits = 3;
+let cvvFO = false;
+var OpenpayCardCaptureAPI = function($) {
+	var _apiContext;
+	var _merchantId;
+	function doPost(isJson, url, params, successCall, errorCallback) {
+		let content = params;
+		if(isJson){
+			content = JSON.stringify(params);
+		}
+		$.ajax({
+			url : url,
+			method : 'POST',
+			data : content,
+			contentType : isJson ? 'application/json; charset=UTF-8' : 'application/x-www-form-urlencoded; charset=UTF-8'
+		}).done(function(jsonResponse, textStatus, jqXHR) {
+			if(jsonResponse && jsonResponse.status !== 'error'){
+				if (jsonResponse.data['charge'].status === 'charge_pending') {
+					console.log(jsonResponse.data['charge'].paymentMethod.url);
+					window.location.replace(jsonResponse.data['charge'].paymentMethod.url);
+				} else {
+					successCall(jsonResponse);
+				}
+			}else{
+				errorCallback(jqXHR, textStatus);
+			}
+		}).fail(function(jqXHR, textStatus) {
+			errorCallback(jqXHR, textStatus);
+		});
+	}
+
+	return {
+		init : function(apiContext, merchantId) {
+			_apiContext = apiContext;
+			_merchantId = merchantId;
+		},
+
+		getShareInfo : function(token, amount, currency, shares, callback, failCallback) {
+			var params = {
+				amount : amount,
+				currency : currency,
+				shares : [ shares ]
+			};
+			var url = _apiContext + 'v1/' + _merchantId + '/cards/' + token + '/shares'
+			doPost(true, url, params, callback, failCallback);
+		},
+
+		sendCharge : function(params, callback, failCallback) {
+        		    var excludedParams = ["cardNumber","cardExpirationMonth","cardExpirationYear","holderName","cardCvv","exp"];
+        			const url = _apiContext + 'v1/card-payment/charge';
+        			params = saveCardAndMakePayment === true || (cardId !== null && cardId !== '') ? params + '&useCof=true' : params + '&useCof=false';
+        			var filterParams = params.split("&").filter(function(param){
+                    		        var paramName = param.split("=")[0];
+                    		        return !excludedParams.includes(paramName);
+                    		    }).join("&");
+        			doPost(false, url, filterParams, callback, failCallback);
+        		}
+	}
+
+}(jQuery);
+
+var OpenpayCardCapture = function($) {
+	var _amount;
+	var _currency;
+	var _provider;
+	var _apiContext;
+	var _merchantId;
+
+	var _token;
+	var _shareInfo;
+	var _transactionId;
+	var _isShopify;
+	var _isSingleAttempt;
+
+	var setup = function(apiContext, merchantId, amount, currency, provider, transactionId, isShopify, isSingleAttempt) {
+		_apiContext = apiContext;
+		_merchantId = merchantId;
+		_amount = amount;
+		_currency = currency;
+		_provider = provider;
+		_transactionId = transactionId;
+		_isShopify = isShopify === 'true';
+		_isSingleAttempt = isSingleAttempt === 'true';
+		console.log(_isShopify);
+		OpenpayCardCaptureAPI.init(apiContext, merchantId);
+		$("#cancelInstallmentsBtn").on('click', function(){
+			$('#chargeSubmitButton').button('reset');
+		});
+		$("#confirmInstallmentsBtn").on('click', function(){
+			$("#confirmInstallmentsBtn").button('loading');
+			sendCharge();
+		});
+	}
+	var setTransactionId = function(transactionId) {
+		_transactionId = transactionId;
+	}
+
+	var doPayment = function() {
+		if (cardId !== '' && cardId !== null) {
+			buildDataForCharge(cardId);
+			return;
+		}
+
+		if (saveCardAndMakePayment === true) {
+			createCard();
+		} else {
+			OpenPay.token.extractFormAndCreate('cardPaymentForm', cardCharge, errorTokenCallback);
+		}
+	}
+
+	var errorTokenCallback = function(response) {
+		var desc = response.data.description || response.message;
+		$("#confirmInstallmentsModal").modal('hide');
+		$('#chargeSubmitButton').button('reset');
+		$('#confirmInstallmentsBtn').button('reset');
+
+		const errorMessages = {
+			msjError3003: [
+				"No fué posible realizar el cargo por favor revisa tu saldo e intenta con otra tarjeta",
+				"ERR-3003",
+				"La tarjeta no tiene fondos suficientes",
+				"The card does not have enough funds",
+				"The card does´t have sufficient funds"
+			],
+			msjErrorAuth: [
+				"Not Authenticated",
+				"Not Verified",
+				"Authentication Rejected",
+				"Authentication Could Not Be Performed",
+				"Authentication failed",
+				"Authentication attempted",
+				"ERR-15011",
+				"ERR-15012",
+				"ERR-15013",
+				"ERR-15014",
+				"ERR-15000",
+				"ERR-15001"
+			],
+			msjErrorDatos: [
+				"tarjeta",
+				"correctos",
+				"invalid"
+			],
+            msjErrorCardType: [
+                 "ERR-15548",
+                 "15548",
+                 "Merchant not authorized to use payment plan"
+            ]
+		};
+  let defaultError;
+    if (desc) {
+        if (errorMessages.msjError3003.some(msg => desc.includes(msg))) {
+            defaultError = OpenpayModule.i18n.prop(msjError3003);
+        } else if (errorMessages.msjErrorAuth.some(msg => desc.includes(msg))) {
+            defaultError = OpenpayModule.i18n.prop(msjErrorAuth);
+        } else if (errorMessages.msjErrorDatos.some(msg => desc.includes(msg))) {
+            defaultError = OpenpayModule.i18n.prop(msjErrorDatos);
+        } else if (errorMessages.msjErrorCardType.some(msg => desc.includes(msg))) {
+            defaultError = OpenpayModule.i18n.prop(msjErrorCardType);
+        } else {
+            defaultError = OpenpayModule.i18n.prop(msjErrorGenerico);
+        }
+    } else {
+        defaultError = OpenpayModule.i18n.prop(msjErrorGenerico);
+    }
+    showError(defaultError);
+};
+
+	const cardCharge = function(response) {
+		buildDataForCharge(response.data.id);
+	};
+
+	function buildDataForCharge(tokenOrIdCard) {
+		$('#tokenId').val(tokenOrIdCard);
+		var sharesSelected = $("#sharesSelect").val();
+		if (_currency === 'CLP' && sharesSelected !== '0') {
+			verifyInstallments(_token, sharesSelected);
+		} else {
+			$("#shareId").val('');
+			$("#shares").val('');
+			$("#shareAmount").val('');
+			sendCharge();
+		}
+	}
+
+	function verifyInstallments(token, sharesSelected) {
+		console.log("Checking installments...");
+		OpenpayCardCaptureAPI.getShareInfo(token, _amount, _currency, sharesSelected, function(response) {
+			if (response.available.length == 1) {
+				console.log(response);
+				var shareInfo = response.available[0];
+				$("#shareId").val(shareInfo.share_id);
+				$("#shares").val(shareInfo.shares);
+				$("#shareAmount").val(shareInfo.share_amount);
+				$("#shareAmountText").text(shareInfo.share_amount);
+				$("#confirmInstallmentsModal").modal('show');
+			} else {
+				showError("El número de cuotas seleccionado no está disponible");
+				$('#chargeSubmitButton').button('reset');
+			}
+		}, errorHandler);
+	}
+
+	var sendCharge = function() {
+	    // Browser attribute
+	    let browserScreenHeight = window.innerWidth;
+        let browserScreenWidth = window.innerHeight;
+        let browserUserAgent = navigator.userAgent;
+        let browserLanguage = navigator.language;
+        let browserJavaEnabled = navigator.javaEnabled();
+
+		var params = $("#cardPaymentForm").serialize();
+        params += "&browserScreenHeight=" + encodeURIComponent(browserScreenHeight)
+        params += "&browserScreenWidth=" + encodeURIComponent(browserScreenWidth)
+        params += "&browserUserAgent=" + encodeURIComponent(browserUserAgent)
+        params += "&browserLanguage=" + encodeURIComponent(browserLanguage)
+        params += "&browserJavaEnabled=" + encodeURIComponent(browserJavaEnabled)
+        params += "&browserJavaScriptEnabled=" + encodeURIComponent(true)
+
+		OpenpayCardCaptureAPI.sendCharge(params, redirectToSuccessPage, errorHandler);
+	};
+
+	var doSubscription = function() {
+		OpenPay.token.extractFormAndCreate('cardPaymentForm', subscriptionPlan, errorCallbackSub);
+	}
+
+	var subscriptionPlan = function(response) {
+		_token = response.data.id;
+
+		$('#tokenId').val(_token);
+
+		var params = {
+			plan_id : planId,
+			source_id : _token
+		};
+
+		var content = JSON.stringify(params);
+
+		var url = _apiContext + 'v1/' + _merchantId + '/customers/' + customerId + '/subscriptions/token';
+
+		$.ajax({
+			url : url,
+			method : 'POST',
+			data : content,
+			contentType : 'application/json; charset=UTF-8'
+		}).done(function(jsonResponse) {
+			var data = jsonResponse.data;
+			console.log(data.id);
+
+			if (data.subscription.transaction !== null) {
+				window.location.replace(_apiContext + 'v1/' + _merchantId + "/charges/" + data.subscription.transaction.id + '/card_capture');
+			} else {
+				window.location.replace(_apiContext + 'v1/' + _merchantId + '/customers/' + data.customerId + '/plans/' + data.planId + '/subscription_capture');
+			}
+
+		}).fail(function(jqXHR, textStatus) {
+			errorHandler(jqXHR.responseText, textStatus);
+		});
+	};
+
+	var errorCallbackSub = function(response) {
+		let desc = response.data.description || response.message;
+		$("#confirmInstallmentsModal").modal('hide');
+		$('#chargeSubmitButton').button('reset');
+		$('#confirmInstallmentsBtn').button('reset');
+		let defaultError;
+		const errorMessages = {
+			msjError3003: [
+				"No fué posible realizar el cargo por favor revisa tu saldo e intenta con otra tarjeta",
+				"ERR-3003",
+				"The card does not have enough funds",
+				"La tarjeta no tiene fondos suficientes",
+				"The card does´t have sufficient funds"
+			],
+			msjErrorAuth: [
+				"Not Authenticated",
+				"Not Verified",
+				"Authentication Rejected",
+				"Authentication Could Not Be Performed",
+				"Authentication failed",
+				"Authentication attempted",
+				"ERR-15011",
+				"ERR-15012",
+				"ERR-15013",
+				"ERR-15014",
+				"ERR-15000",
+				"ERR-15001"
+			],
+            msjErrorCardType: [
+             "ERR-15548",
+             "15548",
+             "Merchant not authorized to use payment plan"
+             ]
+};
+		if (desc) {
+			if (errorMessages.msjError3003.some(msg => desc.includes(msg))) {
+				defaultError = OpenpayModule.i18n.prop(msjError3003);
+			} else if (errorMessages.msjErrorAuth.some(msg => desc.includes(msg))) {
+				defaultError = OpenpayModule.i18n.prop(msjErrorAuth);
+			} else if (errorMessages.msjErrorCardType.some(msg => description.includes(msg))) {
+                defaultError = OpenpayModule.i18n.prop(msjErrorCardType);
+			} else if (desc === undefined || desc === null || desc == "The resource is unavailable on this moment. Please try again later") {
+				defaultError = OpenpayModule.i18n.prop(msjErrorGenerico);
+			} else {
+				defaultError = OpenpayModule.i18n.prop(msjErrorDatos);
+			}
+		} else {
+			defaultError = OpenpayModule.i18n.prop(msjErrorGenerico);
+		}
+		showError(defaultError);
+	};
+
+	var errorHandler = function(jqXHR, textStatus) {
+		let description = '';
+		let defaultError = "";
+		if (jqXHR.responseText) {
+			try {
+				response = JSON.parse(jqXHR.responseText);
+				description = response.description || response.message;
+
+			}catch (error) {
+				if(error instanceof SyntaxError) {
+					let mensaje = error.message;
+					console.log('ERROR :', mensaje);
+					description = 'SyntaxError' || 'Internal error';
+				}
+			}
+		}
+		console.log(_isShopify);
+		handleRedirectAndError(description);
+	};
+
+	const handleRedirectAndError = (description) => {
+		if (_isShopify) {
+			const urlRedirectVerify = 'v1/charges/redirect/jumpseller/verify/';
+			window.location.replace(`${_apiContext}${urlRedirectVerify}${_merchantId}/${_transactionId}`);
+		} else if (_isSingleAttempt) {
+			window.location.replace(`${_apiContext}v1/${_merchantId}/charges/${_transactionId}/card_capture`);
+		} else {
+			let defaultError;
+			const errorMessages = {
+            			msjError3003: [
+            				"No fué posible realizar el cargo por favor revisa tu saldo e intenta con otra tarjeta",
+            				"ERR-3003",
+            				"La tarjeta no tiene fondos suficientes",
+            				"The card does not have enough funds",
+            				"The card does´t have sufficient funds"
+            			],
+            			msjErrorAuth: [
+            				"Not Authenticated",
+            				"Not Verified",
+            				"Authentication Rejected",
+            				"Authentication Could Not Be Performed",
+            				"Authentication failed",
+            				"Authentication attempted",
+            				"ERR-15011",
+            				"ERR-15012",
+            				"ERR-15013",
+            				"ERR-15014",
+            				"ERR-15000",
+            				"ERR-15001"
+            			],
+            			msjErrorDatos: [
+            				"tarjeta",
+            				"correctos",
+            				"invalid"
+            			],
+                        msjErrorCardType: [
+                             "ERR-15548",
+                             "15548",
+                             "Merchant not authorized to use payment plan"
+                        ]
+            };
+                if (description) {
+                    if (errorMessages.msjError3003.some(msg => description.includes(msg))) {
+                        defaultError = OpenpayModule.i18n.prop(msjError3003);
+                    } else if (errorMessages.msjErrorAuth.some(msg => description.includes(msg))) {
+                        defaultError = OpenpayModule.i18n.prop(msjErrorAuth);
+                    } else if (errorMessages.msjErrorDatos.some(msg => description.includes(msg))) {
+                        defaultError = OpenpayModule.i18n.prop(msjErrorDatos);
+                    } else if (errorMessages.msjErrorCardType.some(msg => description.includes(msg))) {
+                        defaultError = OpenpayModule.i18n.prop(msjErrorCardType);
+                    } else {
+                        defaultError = OpenpayModule.i18n.prop(msjErrorGenerico);
+                    }
+                } else {
+                    defaultError = OpenpayModule.i18n.prop(msjErrorGenerico);
+                }
+                showError(defaultError);
+         }
+};
+
+
+	var redirectToSuccessPage = function(response) {
+		console.log(_isShopify);
+		var data = response.data;
+		var country = $('#country').val();
+		if('ESP' === country){
+			window.location.replace(data.charge.paymentMethod.url);
+		}else{
+			window.location.replace(_apiContext + 'v1/' + _merchantId + "/charges/" + data.charge.id + '/card_capture');
+		}
+			
+	};
+	
+	function createCard () {
+		let url = CONTEXT_PATH + 'v1/' + merchantPublicId;
+		if (customerId) {
+			url = url + "/customers/" + customerId + '/cards/create-for-checkout';
+			const cardObj = OpenPay.extractFormInfo('cardPaymentForm');
+			cardObj['register_frequent'] = saveCardAndMakePayment;
+			$.ajax({
+				method: "POST",
+				url: url,
+				data: JSON.stringify(cardObj),
+				contentType : 'application/json; charset=UTF-8',
+				success : function(data) {
+					buildDataForCharge(data.id);
+				},
+				error : function() {
+					console.error('Error al crear tarjeta');
+				}
+			});
+
+		}
+
+	}
+
+	return {
+		setup : setup,
+		doPayment : doPayment,
+		doSubscription :doSubscription,
+		setTransactionId :setTransactionId
+	}
+
+}(jQuery);
+
+var showBbvaWallet = function(bin8){
+	$.ajax({
+		method: "GET",
+		url: CONTEXT_PATH + "/charges-form/show-bbva-wallet",
+		data:{
+			"bin": bin8
+		},
+		beforeSend: function( xhr ) {
+			xhr.overrideMimeType( "x-www-form-urlencoded" );
+		},
+		success : function(data) {
+			processData (data);
+		},
+		error : function() {
+			console.error('Error al validar');
+		}
+	});
+}
+
+var showCVVCard = function(data){
+	switch(data){
+		case "\"VISA\"":
+		case "\"MASTERCARD\"":
+		case "\"MASTER\"":
+			$("#cvvVisaMastercard").show();
+			$("#cvvAmex").hide();
+			$('#ccvMessage').show();
+			$('#ccvAmexMessage').hide();
+			$("#cardCvv").attr('maxlength','3');
+			$("#cardCvv").val("");
+			digits = 3;
+			cvvFO = false;
+			break;
+		case "\"AMERICAN EXPRESS\"":
+		case "\"AMERICAN_EXPRESS\"":
+		case "\"AMEX\"":
+			digits = 4;
+			cvvFO = false;
+			$("#cvvVisaMastercard").hide();
+			$('#ccvAmexMessage').show();
+			$("#cardCvv").attr('maxlength','4');
+			$("#cardCvv").val("");
+			$('#ccvMessage').hide();
+			if(ALLOW_AMEX){
+				$("#cvvAmex").show();
+			}
+			break;
+		default:
+			$("#cvvVisaMastercard").hide();
+			$("#cvvAmex").hide();
+			$('#ccvAmexMessage').hide();
+			$('#ccvMessage').show();
+			$("#cardCvv").attr('maxlength','3');
+			$("#cardCvv").val("");
+			digits = 3;
+			cvvFO = false;
+			break;
+	}
+};
+
+var isVisaMasterCardAmerianExpres = function (data){
+	var band = false;
+	switch(data){
+		case "\"VISA\"":
+		case "\"MASTERCARD\"":
+		case "\"MASTER\"":
+		case "\"AMERICAN EXPRESS\"":
+		case "\"AMERICAN_EXPRESS\"":
+			band = true;
+			break;
+		default:
+			break;
+	}
+	return band;
+};
+
+var getBrand = function(bin8){
+	var country = $('#country').val();
+	$.ajax({
+		method: "GET",
+		url: CONTEXT_PATH + "/charges-form/get-brand",
+		data:{
+			"bin": bin8
+		},
+		beforeSend: function( xhr ) {
+			xhr.overrideMimeType( "x-www-form-urlencoded" );
+		},
+		success : function(data) {
+			if('ESP' === country){
+				showCVVCard(data);
+			}else{
+			showBbvaWallet(bin8);
+			showCVVCard(data);	
+			}
+		},
+		error : function() {
+			console.error('Error al validar');
+		}
+	});
+};
+
+var validCard = function(bin8){
+	$.ajax({
+		method: "GET",
+		url: CONTEXT_PATH + "/charges-form/digitalCardBbva",
+		data:{
+			"bin": bin8
+		},
+		beforeSend: function( xhr ) {
+			xhr.overrideMimeType( "x-www-form-urlencoded" );
+		},
+		success : function(data) {
+			if(data === "true"){
+				$("#digitalCardBbva").show();
+				$("#opCardNumberWallet").hide();
+				booleanDigital = true;
+			}else{
+				$("#digitalCardBbva").hide();
+				booleanDigital = false;
+			}
+			return data;
+		},
+		error : function() {
+			console.error('Error al validar');
+			return false;
+		}
+	});
+};
+
+var validWalletCard = function(cardNumber, bin8){
+	if(cardNumber.length >= 6){
+		// VALIDA TARJETA DIGITAL
+		if(typeof V_3DS_2_0 !== 'undefined' && V_3DS_2_0){
+			validCard(bin8);
+		}else{
+			$.ajax({
+				method: "GET",
+				url: CONTEXT_PATH + "/charges-form/show-bbva-wallet",
+				data:{
+					"bin": bin8
+				},
+				beforeSend: function( xhr ) {
+					xhr.overrideMimeType( "x-www-form-urlencoded" );
+				},
+				success : function(data) {
+					processData (data);
+				},
+				error : function() {
+					console.error('Error al validar');
+				}
+			});
+		};
+		getBrand(bin8);
+	}
+};
+
+var clearMsgs = function(cardNumber){
+	if(cardNumber.length === 0){
+		$("#useCardPointsGpo").hide();
+		$("#opCardNumberWallet").hide();
+		$("#digitalCardBbva").hide();
+		$("#cvvVisaMastercard").hide();
+		$("#cvvAmex").hide();
+	}
+};
+
+var processData = function(data){
+	if(data!=null && data.trim() != '' && data.trim().length>5){
+		if (data.toLowerCase().includes("felicidades") || data.toLowerCase().includes("gracias")){
+			$("#digitalCardBbva").show();
+			$("#opCardNumberWallet").hide();
+		}else{
+			$("#opCardNumberWallet").show();
+			$("#digitalCardBbva").hide();
+		}
+	}else{
+		$("#digitalCardBbva").hide();
+		$("#opCardNumberWallet").hide();
+		console.debug("wp");
+	}
+};
+
+var successValidTypeCardGeneric = function(data){
+	if(data!=null){
+		type = data.card_type;
+		$('#payments').empty();
+		if ((planId === undefined && planId === null) || planId === "") {
+			if('CREDIT' === type){
+				for(i=1; i<=36; i++){
+					$('#payments').append('<option value="' + i + '">' +  i + '</option>');
+				}
+				$('#msiGroup').show();
+			} else {
+				$('#payments').append('<option value="0">NO</option> ');
+				$('#msiGroup').hide();
+			}
+		}
+		if('PER' === $('#country').val()){
+			$('#paymentsType').val("WITH_INTEREST");
+		}
+	}
+};
+
+var validTypeCardGeneric = function(bin8,isEglobal){
+	var country = $('#country').val();
+	if('COL' === country){
+		$('#peGlobalC').show();
+		$.ajax({
+			method: "GET",
+			url: CONTEXT_PATH + "v1/cards/validate-bin",
+			data:{
+				"bin": bin8
+			},
+			dataType: "json",
+			beforeSend: function( xhr ) {
+				xhr.overrideMimeType( "x-www-form-urlencoded" );
+			},
+			success : function(data, textStatus, jqXHR) {
+				successValidTypeCardGeneric(data);
+			},
+			error : function() {
+				console.error('Error al validar');
+			}
+		});
+	}
+};
+
+var successValidTypeCardPERAux = function(cuotas, isWithInterest){
+	let paymentsType;
+	$('#payments').empty();
+	if (isWithInterest) {
+		$('#peMciLabel').show();
+		paymentsType = "WITH_INTEREST";
+	} else {
+		$('#peMsiLabel').show();
+		paymentsType = "WITHOUT_INTEREST";
+		$('#payments').append('<option value="1">1</option> ');
+	}
+	$('#paymentsType').val(paymentsType);
+	for (i = 0; i < cuotas.length; i++) {
+		$('#payments').append('<option value="' + cuotas[i] + '">' + cuotas[i] + '</option>');
+	}
+};
+
+var successValidTypeCardPER = function(data){
+	if (data != null) {
+		type = data.cardType;
+		if ('credit' === type) {
+			cuotas = data.installments;
+			var isWithInterest = data['withInterest'];
+			if (cuotas.length > 0) {
+				successValidTypeCardPERAux(cuotas, isWithInterest);
+				$('#msiGroup').show();
+			}
+		} else {
+			$('#payments').append('<option value="0">NO</option> ');
+			$('#msiGroup').hide();
+		}
+	}
+};
+
+var validTypeCardPER = function(bin6,isEglobal){
+	var country = $('#country').val();
+	if ( 'PER' === country ) {
+		$('#payments').empty();
+		$('#peMciLabel').hide();
+		$('#peMsiLabel').hide();
+		$('#paymentsType').val(null);
+		$('#msiGroup').hide();
+		$.ajax({
+			contentType: 'application/json',
+			method: "GET",
+			url: CONTEXT_PATH + "v1/" + merchantPublicId + "/bines/" + bin6 + "/promotions",
+			dataType: "json",
+			success: function (data, textStatus, jqXHR) {
+				successValidTypeCardPER(data);
+			},
+			error: function () {
+				console.error('Error al validar');
+			}
+		});
+	}
+};
+
+var validateEglobal= function (bin8,bin6){
+	$('#peGlobalC').hide();
+	$.LoadingOverlay("show");
+	$.ajax({
+		contentType: 'application/json',
+		method: "GET",
+		url: CONTEXT_PATH + "v1/" + merchantPublicId + "/validate_eglobal",
+		dataType: "json",
+		success: function (data) {
+			console.log(data);
+			validTypeCardGeneric(bin8,data);
+			validTypeCardPER(bin6,data);
+			$.LoadingOverlay("hide");
+		},
+		error: function () {
+			$.LoadingOverlay("hide");
+			console.error('Error validateEglobal');
+		}
+	});
+}
+var formatUseCardPointsGpo = function(result){
+	if (result.data.includes("BBVA")) {
+		$("#pointsMessage").html('<strong>' + msg.pointsBbva + '</strong>');
+	} else {
+		$("#pointsMessage").html('<strong>' + msg.points + '</strong>');
+	}
+};
+
+var cardNumberValidations = function() {
+	var cardNumber = $('#cardNumber').val().replace(/ /g, '').replace(/-/g, '');
+	var bin8 = cardNumber.substring(0, 8);
+	var bin6 = cardNumber.substring(0, 6);
+	var urlAllowedPoints = CONTEXT_PATH + "/v1/allowed-points/" + transactionId + "/" + bin8;
+	var country = $('#country').val();
+	if ('ESP' === country) {
+		getBrand(bin8);
+	} else {
+		validWalletCard(cardNumber, bin8);
+
+		if (cardNumber.length >= 14) {
+			if (transactionId != "") {
+				$.ajax({
+					url: urlAllowedPoints,
+					type: "GET",
+					dataType: "json"
+				})
+					.done(function(result) {
+						if (result.status === 'ok' && result.data.includes("true")) {
+							$("#useCardPointsGpo").show();
+							formatUseCardPointsGpo(result);
+						} else {
+							$("#useCardPointsGpo").hide();
+							$("#pointsMessage").html('<strong>' + msg.points + '</strong>');
+						}
+						console.debug('PointsAllowed: ' + result.data);
+					})
+					.fail(function() {
+						//Notification().showErrorSmallBox("Consulta Puntos", 'Error al verificar uso de puntos', 4000);
+					});
+				console.debug("LLAMANDO: " + urlAllowedPoints);
+			}
+		}
+
+		if ('MEX' !== country) {
+			validateEglobal(bin8, bin6);
+		}
+	}
+	clearMsgs(cardNumber);
+};
+
+var validCardNumber = function(value){
+	if(value.length === 0){
+		$("#cardNumberError").hide();
+		$("#cardNumberRequired").show();
+		$("#cardNumber").parent().addClass("has-error-op");
+		return false;
+	}
+	if (typeof OpenPay=='function') {
+		var validCard = OpenPay.card.validateCardNumber(value);
+		if(!validCard){
+			$("#cardNumberError").show();
+			$("#cardNumberRequired").hide();
+			$("#cardNumber").parent().addClass("has-error-op");
+		}else{
+			$("#cardNumber").parent().removeClass("has-error-op");
+		}
+		return validCard;
+	}
+	return true;
+};
+
+//Se agrega validacion de tamanio, especial para la fecha en pago con tarjeta para un mensaje personalizado.
+//Se agrega validacion de caducidad.
+function addValidations (){
+
+	$("#exp").on("change", function(){
+		if ($("#exp").val().length != 5 )
+		{
+			invalidCardDate();
+		}else{
+			//variables para validacion de caducidad de la fecha.
+			const fecha = new Date();
+			const anioActual = fecha.getFullYear();
+			const mesActual = fecha.getMonth() + 1;
+			let currentDate = mesActual + "/" + anioActual;
+			let inputFecha = $("#exp").val();
+			let fechaSeparadaI = inputFecha.split("/");
+			let fechaSeparadaCD = currentDate.split("/");
+			let anioDif = fechaSeparadaI[1] - fechaSeparadaCD[1].substring(2);
+			let mesDif = fechaSeparadaI[0] - fechaSeparadaCD[0];
+			//validando caducidad de la fecha
+			if( (fechaSeparadaI[0] > 0 && fechaSeparadaI[0] <= 12) && ( anioDif > 0 || (anioDif == 0 && mesDif >= 0) ) )
+			{
+				setValidDate(true); //bandera fecha correcta.
+				$("#exp").parent().removeClass("has-error-op");
+				$("#dateError").hide();
+			}else{
+				invalidCardDate(); //se muestra mensaje de error y se deshabilita boton submit
+			}
+		}
+	});
+	//se limita el numero de caracteres.
+	$("#exp").on("keyup", function(){
+		if ($(this).val().length < 5)
+			return false;
+	});
+}
+// funcion para mostrar mensaje de error cuando falla la validacion de la fecha de vencimiento.
+function invalidCardDate ()
+{
+	setValidDate (false);
+	$("#dateError").remove();
+	$("#exp").parent().addClass("has-error-op");
+
+	$('#chargeSubmitButton').attr("disabled", "true");
+	const btnSubmit = document.getElementById('chargeSubmitButton');
+	btnSubmit.disabled = true;
+
+	if ($("#exp").val().length != 0 ) {// validación campo vacío
+		$("#expForm").append(' <span for="exp" id="dateError"  for="expForm" class="help-block-date"' +
+			'style="position: absolute; margin-top: 0px; font-size: 12px !important; white-space: nowrap; display: none">Ingresa una fecha de vencimiento válida.</span>');
+		$("#dateError").attr("style", "display:block !important");
+		$("#dateError").attr("style", "font-size:12px !important");
+	}
+}
+
+function validDigitalCard (bin8){
+	validCard(bin8);
+	return booleanDigital;
+}
+
+$(document).ready(function() {
+	booleanDigital = false;
+	$("#useCardPointsGpo").hide();
+	$("#opCardNumberWallet").hide();
+	$("#digitalCardBbva").hide();
+	$("#cvvVisaMastercard").hide();
+	$("#cvvAmex").hide();
+	$("#cardNumberError").hide();
+	$("#cardNumberRequired").hide();
+
+	if(typeof planName === 'undefined'){
+		$("#dataPlan").remove();
+	}else{
+		if ((planName === undefined && planName === null) || planName === "") {
+			$("#dataPlan").remove();
+		} else {
+			$('#dataPlan').attr("hidden", false);
+			$( "#payments" ).prop( "disabled", true );
+		}
+	}
+	setCardNumberFocusOut();
+	setCardNumberKeyUp();
+	setNormalCardNumberFocusOut();
+	setNormalCardNumberKeyUp();
+	addValidations();
+
+});
+
+
+function setCardNumberFocusOut(){
+	$('#cardNumber').focusout(function() {
+		let cardNumberValid = $('#cardNumber').valid();
+		if (cardNumberValid == 0) {
+			$("#cardNumberForm").css("margin-bottom", "14px");
+			$("#expForm").css("margin-top", "14px");
+			$("#cvvForm").css("margin-top", "24px");
+		} else {
+			$("#cardNumberForm").css("margin-bottom", "24px");
+			$("#expForm").css("margin-top", "24px");
+			$("#cvvForm").css("margin-top", "24px");
+		}
+
+		var cardNumber = $('#cardNumber').val().replace(/ /g,'').replace(/-/g,'');
+		var bin6 = cardNumber.substring(0,6);
+		var binLength = bin6.length;
+		if(binLength < 6 || (cardNumber.length >= 7 && cardNumber.length < 14 ) || !OpenPay.card.validateCardNumber(cardNumber)){
+			$("#cardNumber").parent().addClass("has-error-op");
+			$("#cardNumberError").show();
+			$("#cardNumberRequired").hide();
+			$("#opCardNumberWallet").hide();
+			$("#digitalCardBbva").hide();
+			$('#cardMessage').hide();
+			$('#cardNumberForm').css('margin-bottom', '24px');
+			$('#ccvMessage').hide();
+			$('#ccvAmexMessage').hide();
+			$('#ccvForm').css('margin-bottom', '24px');
+			$('#ccvForm').css('margin-top', '14px');
+		}else if(cardNumber.length === 0){
+			$("#cardNumberError").hide();
+			$('#cardMessage').hide();
+			$('#cardNumberForm').css('margin-bottom', '24px');
+			$('#ccvMessage').hide();
+			$('#ccvAmexMessage').hide();
+			$('#ccvForm').css('margin-bottom', '24px');
+			$('#ccvForm').css('margin-top', '24px');
+			$("#cardNumberRequired").show();
+			$("#cardNumber").parent().addClass("has-error-op");
+		}else{
+			$("#cardNumberError").hide();
+			$("#cardNumberRequired").hide();
+			$('#cardMessage').show();
+			$('#cardNumberForm').css('margin-bottom', '0px');
+			$('#ccvForm').css('margin-bottom', '24px');
+			$('#ccvForm').css('margin-top', '24px');
+			$("#cardNumber").parent().removeClass("has-error-op");
+			cardNumberValidations();
+		}
+	});
+}
+
+function setCardNumberKeyUp(){
+	$('#cardNumber').keyup(function() {
+		var cardNumber = $('#cardNumber').val().replace(/ /g,'').replace(/-/g,'');
+		if(cardNumber.length === 6){
+			$("#cardNumberError").hide();
+			$("#cardNumberRequired").hide();
+			$("#cardNumber").parent().removeClass("has-error-op");
+			$("#cardNumber").parent().removeClass("has-error");
+			cardNumberValidations();
+		}
+	});
+}
+
+function setNormalCardNumberFocusOut(){
+	$('#normalCardNumber').focusout(function() {
+		var cardNumber = $('#cardNumber').val().replace(/ /g,'').replace(/-/g,'');
+		var bin6 = cardNumber.substring(0,6);
+		var binLength = bin6.length;
+		if(binLength < 6 || (cardNumber.length >= 7 && cardNumber.length < 14 ) || !OpenPay.card.validateCardNumber(cardNumber)){
+			$("#cardNumber").parent().addClass("has-error-op");
+			$("#cardNumberError").show();
+			$("#cardNumberRequired").hide();
+			$("#opCardNumberWallet").hide();
+			$("#digitalCardBbva").hide();
+			$("#dateExpirationDiv").css({"margin-top":"50px"});
+		}else if(cardNumber.length === 0){
+			$("#cardNumberError").hide();
+			$("#cardNumberRequired").show();
+			$("#cardNumber").parent().addClass("has-error-op");
+		}else{
+			$("#cardNumberError").hide();
+			$("#cardNumberRequired").hide();
+			$("#cardNumber").parent().removeClass("has-error-op");
+			cardNumberValidations();
+		}
+	});
+}
+
+function setNormalCardNumberKeyUp(){
+	$('#normalCardNumber').keyup(function() {
+		var cardNumber = $('#cardNumber').val().replace(/ /g,'').replace(/-/g,'');
+		if(cardNumber.length === 6){
+			$("#cardNumberError").hide();
+			$("#cardNumberRequired").hide();
+			$("#cardNumber").parent().removeClass("has-error-op");
+			cardNumberValidations();
+		}
+	});
+}
+
+function validateLengthCvv() {
+	$('#cardCvv').keyup(function() {
+		showCvvMessage($(this));
+	});
+
+	$('#cardCvv').focusout(function() {
+		showCvvMessage($(this));
+	});
+
+}
+
+function showCvvMessage(input) {
+	let limit = parseInt(input.attr('maxlength'));
+	let text = input.val();
+	let chars = text.length;
+	let em = $("[for=cardCvv]");
+	if (chars < limit) {
+		if (em && em[0] && em[0].nodeName == "SPAN") {
+			setTimeout(function() {
+				em[0].innerText = 'Ingresa un código de seguridad válido.';
+			}, 100);
+
+		}
+	}
+}

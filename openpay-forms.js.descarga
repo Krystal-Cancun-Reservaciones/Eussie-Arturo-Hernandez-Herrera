@@ -1,0 +1,47 @@
+function showErrors(jsonResponse, validator) {
+	if (jsonResponse && jsonResponse.errors && jsonResponse.errors.length > 0 && validator) {
+		var errors = {};
+		for(var error in jsonResponse.errors) {
+			if (jsonResponse.errors[0].field){
+				errors[jsonResponse.errors[error].field] = jsonResponse.errors[error].defaultMessage;
+			} else {
+				errors[jsonResponse.errors[error].objectName] = jsonResponse.errors[error].defaultMessage;
+			}
+		}
+		validator.showErrors(errors);
+	}
+} 
+
+
+/**
+ * Desactiva el boton y le pone un icono para indicar que esta procesando el formulario.
+ * @param selector    El selector css del boton a desactivar.
+ * @param enabled     Indica si el boton estará activo o inactivo.
+ * @param enabledIcon El icono original del boton. Si se indica, al desactivar 
+ *                    el boton el icono cambiará para indicar que se esta realizando una acción.
+ **/
+function setEnabledSubmitButtonClick(selector, enabled, enabledIcon){
+	if(enabled){
+		$(selector).removeAttr('disabled');
+		if(enabledIcon){
+			$("i.fa", selector).removeClass("fa-refresh fa-spin");
+			$("i.fa", selector).addClass(enabledIcon);
+			if($(selector).parent().children("#doCancelButton").length > 0) {
+				$(selector).parent().children("#doCancelButton").removeAttr('disabled');
+			}
+		}
+	}else{
+		$(selector).attr('disabled', 'disabled');
+		if(enabledIcon){
+			$("i.fa", selector).removeClass(enabledIcon);
+			$("i.fa", selector).addClass("fa-refresh fa-spin");
+			if($(selector).parent().children("#doCancelButton").length > 0) {
+				$(selector).parent().children("#doCancelButton").attr('disabled', 'disabled');
+			}
+		}
+	}
+}
+
+function getSelectpickerText(id){
+	return $("[data-id=" + id + "] .filter-option").text();
+}

@@ -1,0 +1,100 @@
+var OpenpayCardCapture3Ds2 = function($){
+	var _eglobalParams;
+	var setup = function(eglobalParams){
+		_eglobalParams = eglobalParams;
+	}
+	var doPayment = function(){
+		console.log(_eglobalParams);
+
+		var cardNumber = $('#cardNumber').val().replace(/ /g,'').replace(/-/g,'');
+		$('input[name="Ds_Merchant_Pan"]').val(cardNumber);
+
+		var expDate;
+		if ($('#cardExpirationMonth').val().length === 1) {
+			$('#cardExpirationMonth').val('0' + $('#cardExpirationMonth').val());
+		}
+		expDate = $('#cardExpirationYear').val() + $('#cardExpirationMonth').val();
+		$('input[name="Ds_Merchant_ExpiryDate"]').val(expDate);
+
+
+		var browserScreenHeight = window.innerHeight;
+		$('input[name="browserScreenHeight"]').val(browserScreenHeight);
+
+		var browserScreenWidth = window.innerWidth;
+		$('input[name="browserScreenWidth"]').val(browserScreenWidth);
+
+		var browserUserAgent = navigator.userAgent;
+		$('input[name="browserUserAgent"]').val(browserUserAgent);
+
+		var browserLanguage = navigator.language;
+		$('input[name="browserLanguage"]').val(browserLanguage);
+
+		var browserJavaEnabled = navigator.javaEnabled();
+		$('input[name="browserJavaEnabled"]').val(browserJavaEnabled);
+
+		$('input[name="browserJavascriptEnabled"]').val(true);
+
+		$('#opChargeForm').submit();
+	}
+
+	return {
+		setup : setup,
+		doPayment : doPayment
+	}
+}(jQuery);
+
+$('#normalCardNumber').payment('formatCardNumber');
+
+$('#normalCardNumber').on('keydown keyup', function() {
+	maskNumber(this, $('#opCardNumber'));
+});
+
+function maskNumber(element, target) {
+	var res = element.value.replace(/\s/g, ''), // grabs the value
+	len = res.length, // grabs the length
+	max = 23, // sets a max chars
+	stars = len > 5 ? len > 6 ? len > 7 ? len > 8 ? len > 9 ? len > 10 ? len > 11 ? len > 12 ? len > 13 ? 'XX XXXX XX'
+			: 'XX XXXX X'
+			: 'XX XXXX'
+			: 'XX XXX'
+			: 'XX XX'
+			: 'XX X'
+			: 'XX'
+			: 'X'
+			: ''
+			: '', //this provides the masking and formatting
+	result = len == 19 ? res.substring(0, 4) + ' ' + res.substring(4, 6)
+			+ stars + res.substring(14, 16) + ' ' + res.substring(16)
+			: len == 18 ? res.substring(0, 4) + ' ' + res.substring(4, 6)
+					+ stars + res.substring(14, 16) + ' ' + res.substring(16)
+					: len == 17 ? res.substring(0, 4) + ' '
+							+ res.substring(4, 6) + stars
+							+ res.substring(14, 16) + ' ' + res.substring(16)
+							: len = 4 ? res.substring(0, 4) + ' '
+									+ res.substring(4, 6) + stars
+									+ res.substring(14) : res.substring(0, 4)
+									+ stars + res.substring(14); //this is the result
+	$(element).attr('maxlength', max); //setting the max length
+	target.val(result); //spits the value into the input
+	$("#cardNumber").val(element.value);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+   var infoDiv = document.getElementById("infoToShow");
+    var showMoreCheckbox = document.getElementById("showMoreBtn");
+    var cardPaymentForm = document.getElementById("cardPaymentForm");
+
+    showMoreCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            infoDiv.classList.remove("hidden");
+            cardPaymentForm.classList.add("style-form");
+        } else {
+            infoDiv.classList.add("hidden");
+            cardPaymentForm.classList.remove("style-form");
+        }
+    });
+
+    if (window.innerWidth <= 600) {
+        infoDiv.classList.add("hidden");
+    }
+});
